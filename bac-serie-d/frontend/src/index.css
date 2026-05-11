@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    @apply bg-gray-50 text-gray-900;
+  }
+  .dark body { @apply bg-gray-950 text-gray-100; }
+}
+
+@layer components {
+  /* Scrollbar personnalisée */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-gray-100; }
+  ::-webkit-scrollbar-thumb { @apply bg-gray-300 rounded-full; }
+  .dark ::-webkit-scrollbar-track { @apply bg-gray-800; }
+  .dark ::-webkit-scrollbar-thumb { @apply bg-gray-600; }
+
+  /* Cartes */
+  .card {
+    @apply bg-white border border-gray-100 rounded-xl shadow-sm;
+  }
+  .dark .card { @apply bg-gray-800 border-gray-700; }
+
+  /* Boutons */
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium
+           hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium
+           hover:bg-gray-200 transition-colors;
+  }
+  .dark .btn-secondary { @apply bg-gray-700 text-gray-300 hover:bg-gray-600; }
+
+  /* Badge de score */
+  .score-badge {
+    @apply text-xs font-medium px-2.5 py-1 rounded-full;
+  }
+  .score-good  { @apply bg-success-light text-success; }
+  .score-mid   { @apply bg-warning-light text-warning; }
+  .score-low   { @apply bg-danger-light text-danger; }
+
+  /* Animation d'apparition */
+  .fade-in { animation: fadeIn 0.3s ease-out; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Barre de progression */
+  .progress-bar {
+    @apply h-2 rounded-full transition-all duration-700 ease-out;
+  }
+
+  /* Nav active */
+  .nav-active {
+    @apply bg-primary-light text-primary font-medium;
+  }
+
+  /* Formules mathématiques */
+  .formula {
+    @apply bg-gray-50 border-l-4 border-primary px-4 py-3 rounded-r-lg
+           font-mono text-sm my-3 text-gray-800;
+  }
+  .dark .formula { @apply bg-gray-900 text-gray-200; }
+}
