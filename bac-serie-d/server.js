@@ -5,13 +5,7 @@ const { sequelize } = require("./config/database");
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  }),
-);
-
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 
 // Routes
@@ -24,42 +18,30 @@ app.use("/api/sujets", require("./routes/sujets"));
 app.use("/api/quiz", require("./routes/quiz"));
 app.use("/api/scores", require("./routes/scores"));
 app.use("/api/progression", require("./routes/progression"));
-app.use("/api/admin", require("./routes/admin"));
+app.use("/api/admin", require("./routes/admin")); // ← NOUVEAU
 
-// Route test API
 app.get("/api/health", (req, res) => {
-  res.json({
-    status: "OK",
-    message: "Bac Série D API en ligne",
-  });
+  res.json({ status: "OK", message: "Bac Série D API en ligne" });
 });
 
-// Gestion erreurs
 app.use((err, req, res, next) => {
   console.error(err.stack);
-
-  res.status(500).json({
-    success: false,
-    message: "Erreur serveur",
-    error: err.message,
-  });
+  res
+    .status(500)
+    .json({ success: false, message: "Erreur serveur", error: err.message });
 });
 
 const PORT = process.env.PORT || 5000;
 
-// Démarrage serveur
 (async () => {
   try {
-    // PostgreSQL désactivé temporairement
-    // await sequelize.authenticate();
-    // console.log('✅ Connexion PostgreSQL réussie');
-
-    console.log("⚠ PostgreSQL désactivé temporairement");
-
-    app.listen(PORT, () => {
-      console.log(`🚀 Serveur démarré sur le port ${PORT}`);
-    });
+    await sequelize.authenticate();
+    console.log("✅ Connexion PostgreSQL réussie");
+    app.listen(PORT, () =>
+      console.log(`🚀 Serveur démarré sur le port ${PORT}`),
+    );
   } catch (err) {
-    console.error("❌ Erreur:", err.message);
+    console.error("❌ Erreur de connexion DB:", err.message);
+    process.exit(1);
   }
 })();
