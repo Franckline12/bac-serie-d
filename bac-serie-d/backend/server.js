@@ -11,6 +11,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:3031",
+      "https://bac-serie-d-vrai2.vercel.app",
       "https://bac-serie-d-vrai2-francklinemarie14-3892s-projects.vercel.app",
     ],
     credentials: true,
