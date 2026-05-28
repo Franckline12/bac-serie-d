@@ -5,7 +5,23 @@ const { sequelize } = require("./config/database");
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+// ✅ CORS corrigé — autorise localhost et Vercel
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3031",
+      "https://bac-serie-d-vrai2-francklinemarie14-3892s-projects.vercel.app",
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
+// ✅ Gérer les requêtes preflight OPTIONS (obligatoire)
+app.options("*", cors());
+
 app.use(express.json());
 
 // Routes
@@ -36,7 +52,6 @@ const PORT = process.env.PORT || 5000;
 // Démarrage serveur
 (async () => {
   try {
-    // Connexion PostgreSQL Supabase Cloud
     await sequelize.authenticate();
     console.log("✅ Connexion PostgreSQL réussie (Supabase Cloud)");
 
