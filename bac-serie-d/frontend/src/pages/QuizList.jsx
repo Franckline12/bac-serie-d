@@ -35,14 +35,14 @@ export default function QuizList() {
   const filtered = filtre === 'tous' ? quizList : quizList.filter(q => q.niveau === filtre)
 
   return (
-    <div className="max-w-3xl mx-auto fade-in">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 fade-in">
       <div className="mb-6">
         <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Quiz interactifs</h1>
         <p className="text-sm text-gray-500 mt-1">Teste tes connaissances avec le chronomètre</p>
       </div>
 
       {/* Filtre niveau */}
-      <div className="flex gap-2 mb-5">
+      <div className="flex flex-wrap gap-2 mb-5">
         {['tous','facile','moyen','difficile'].map(n => (
           <button key={n} onClick={() => setFiltre(n)}
             className={`text-sm px-3 py-1.5 rounded-lg capitalize transition-colors ${
@@ -57,7 +57,7 @@ export default function QuizList() {
 
       <div className="space-y-3">
         {filtered.map(q => (
-          <div key={q.id} className="card p-4 flex items-center gap-4">
+          <div key={q.id} className="card p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="w-10 h-10 bg-purple-light rounded-xl flex items-center justify-center flex-shrink-0">
               <Brain size={18} style={{ color: '#534AB7' }} />
             </div>

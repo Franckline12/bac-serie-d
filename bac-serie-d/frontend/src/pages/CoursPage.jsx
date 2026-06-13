@@ -139,7 +139,7 @@ export default function CoursPage() {
   ]
 
   return (
-    <div className="max-w-3xl mx-auto fade-in">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 fade-in">
       <div className="flex items-center gap-3 mb-6">
         <button onClick={() => navigate(-1)}
           className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -152,7 +152,7 @@ export default function CoursPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl mb-6">
+      <div className="flex flex-wrap gap-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl mb-6">
         {tabs.map(t => (
           <button key={t.key} onClick={() => setTab(t.key)}
             className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-lg transition-colors ${
@@ -200,7 +200,7 @@ export default function CoursPage() {
       )}
 
       {/* CTA Quiz */}
-      <div className="mt-6 p-4 bg-purple-light rounded-xl flex items-center justify-between">
+      <div className="mt-6 p-4 bg-purple-light rounded-xl flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-3">
         <div>
           <p className="text-sm font-medium text-purple-700 dark:text-purple-300">Prêt à te tester ?</p>
           <p className="text-xs text-purple-500 mt-0.5">Quiz disponibles pour ce chapitre</p>

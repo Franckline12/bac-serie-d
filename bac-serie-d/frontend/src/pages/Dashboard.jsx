@@ -83,7 +83,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 fade-in">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-6 fade-in">
       {/* Header */}
       <div>
         <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -95,7 +95,7 @@ export default function Dashboard() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard icon={TrendingUp} label="Progression globale" value={`${data.progression_globale}%`}
           sub="toutes matières" color="text-primary" bg="bg-primary-light" />
         <StatCard icon={Brain} label="Quiz complétés" value={data.nb_quiz}
@@ -106,7 +106,7 @@ export default function Dashboard() {
           sub="Continue !" color="text-danger" bg="bg-danger-light" />
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Graphique progression */}
         <div className="card p-5">
           <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
@@ -193,7 +193,7 @@ export default function Dashboard() {
         </h2>
         <div className="space-y-0 divide-y divide-gray-50 dark:divide-gray-800">
           {data.derniers_quiz?.map((q, i) => (
-            <div key={i} className="flex items-center justify-between py-3">
+            <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center justify-between py-3 gap-3">
               <div>
                 <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
                   {q.quiz_titre}

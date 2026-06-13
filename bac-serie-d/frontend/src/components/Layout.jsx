@@ -37,6 +37,7 @@ export default function Layout() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [dark, setDark] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const isAdmin = user?.role === 'admin'
 
   const toggleDark = () => {
@@ -57,8 +58,8 @@ export default function Layout() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-950">
-      {/* Sidebar */}
-      <aside className="w-56 flex-shrink-0 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col">
+      {/* Desktop Sidebar (hidden on small screens) */}
+      <aside className="hidden md:flex w-56 flex-shrink-0 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col">
         {/* Brand */}
         <div className="px-4 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="flex items-center gap-2 mb-1">
@@ -151,9 +152,84 @@ export default function Layout() {
         </div>
       </aside>
 
+      {/* Mobile drawer */}
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-0 z-40 flex">
+          <div className="fixed inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
+          <div className="relative w-64 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col p-3">
+            {/* Brand */}
+            <div className="px-2 py-2 border-b border-gray-100 dark:border-gray-800">
+              <div className="flex items-center gap-2 mb-1">
+                <GraduationCap size={20} className="text-primary" />
+                <span className="font-semibold text-gray-900 dark:text-white text-sm">BacPro Madagascar</span>
+              </div>
+            </div>
+            {/* Reuse navigation (mobile) */}
+            <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
+              {navItems.map(({ label, to, icon: Icon }) => (
+                <NavLink key={to} to={to} onClick={() => setMobileOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
+                      isActive
+                        ? 'bg-primary-light text-primary font-medium'
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                    }`}
+                >
+                  <Icon size={15} />
+                  {label}
+                </NavLink>
+              ))}
+            </nav>
+            <div className="p-3 border-t border-gray-100 dark:border-gray-800">
+              <div className="flex items-center gap-2 mb-3">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${
+                  isAdmin ? 'bg-red-50 text-red-600' : 'bg-primary-light text-primary'
+                }`}>{user?.nom?.slice(0,2).toUpperCase()}</div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-gray-900 dark:text-white truncate">{user?.nom}</p>
+                  <p className="text-xs text-gray-400 capitalize">{user?.role}</p>
+                </div>
+              </div>
+              <div className="flex gap-1">
+                <button onClick={() => { toggleDark(); setMobileOpen(false) }}
+                  className="flex-1 flex items-center justify-center gap-1 text-xs text-gray-500 hover:text-gray-700 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
+                  {dark ? <Sun size={12} /> : <Moon size={12} />}
+                  {dark ? 'Clair' : 'Sombre'}
+                </button>
+                <button onClick={() => { handleLogout(); setMobileOpen(false) }}
+                  className="flex-1 flex items-center justify-center gap-1 text-xs text-red-500 hover:text-red-700 py-1.5 rounded-lg hover:bg-red-50 transition-colors">
+                  <LogOut size={12} />
+                  Déco
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <main className="flex-1 overflow-y-auto p-6">
+        {/* Mobile top bar */}
+        <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
+          <div className="flex items-center gap-2">
+            <button onClick={() => setMobileOpen(true)} className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-700 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <div className="flex items-center gap-2">
+              <GraduationCap size={18} className="text-primary" />
+              <span className="font-semibold text-sm text-gray-900 dark:text-white">BacPro</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <button onClick={toggleDark} className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+              {dark ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+          </div>
+        </header>
+
+        <main className="flex-1 overflow-y-auto p-4 md:p-6">
           <Outlet />
         </main>
       </div>
