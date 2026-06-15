@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: frontend-app
-          imagePullPolicy: IfNotPresent
+          image: bac-serie-d-frontend:latest # ⚙️ Nom d'image local exact corrigé
+          imagePullPolicy: IfNotPresent # 🐋 Force l'utilisation de l'image locale Minikube
           ports:
             - containerPort: 5173
           resources:

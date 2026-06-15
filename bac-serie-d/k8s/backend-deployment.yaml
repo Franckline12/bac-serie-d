@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend-deployment
 spec:
-  replicas: 2
+  replicas: 1 # Commencer à 1 est idéal pour observer l'Autoscaling (HPA) grimper ensuite
   selector:
     matchLabels:
       app: backend
@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: backend
-          image: backend-app # 👈 Vérifie si c'est bien le nom de ton image backend
-          imagePullPolicy: IfNotPresent
+          image: bac-serie-d-backend:latest # ⚙️ Nom d'image local exact corrigé
+          imagePullPolicy: IfNotPresent # 🐋 Force l'utilisation de l'image locale Minikube
           ports:
             - containerPort: 5000
           resources:

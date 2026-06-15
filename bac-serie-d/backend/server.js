@@ -25,6 +25,11 @@ app.options("*", cors());
 
 app.use(express.json());
 
+// 🟢 NOUVEAU : Route d'accueil pour éviter l'erreur 404 et servir de Ping
+app.get("/", (req, res) => {
+  res.status(200).send("🚀 API Bac Série D opérationnelle et éveillée !");
+});
+
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/matieres", require("./routes/matieres"));
@@ -37,6 +42,7 @@ app.use("/api/scores", require("./routes/scores"));
 app.use("/api/progression", require("./routes/progression"));
 app.use("/api/admin", require("./routes/admin"));
 
+// Route de santé (Health check)
 app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "Bac Série D API en ligne" });
 });
